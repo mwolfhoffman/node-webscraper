@@ -4,6 +4,8 @@ var request = require('request');
 var cheerio = require('cheerio');
 var app = express();
 
+app.set('view engine', 'pug')
+
 app.get('/scrape', function (req, res) {
 
     url = 'http://www.imdb.com/title/tt1229340/';
@@ -34,7 +36,7 @@ app.get('/scrape', function (req, res) {
 
         //fs will take the 'json' object, stringify it, and send that to the './output.json' file.
         fs.writeFile('output.json', JSON.stringify(json, null, 4), function (err) {
-        res.sendfile('./output.json');
+            res.render('index', { title: 'Node WebScraper Fun', message: JSON.stringify(json) })
         })
     });
 })
